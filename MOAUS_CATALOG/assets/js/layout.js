@@ -10,7 +10,9 @@
         if(!res.ok) throw new Error(`HTTP ${res.status}`);
         el.innerHTML = await res.text();
       }catch(err){
-        el.innerHTML = `<!-- include failed: ${url} (${err.message}) -->`;
+        el.innerHTML = `<div style="color:#f66;font-size:12px;padding:8px;border:1px solid rgba(255,0,0,.3)">
+          include failed: ${url} (${err.message})
+        </div>`;
       }
     }));
   }
@@ -49,8 +51,48 @@
 
     if(!drawer || !backdrop || !openBtn || !closeBtn) return;
 
+    // 초기 aria 상태
+    openBtn.setAttribute("aria-expanded", "false");
+    drawer.setAttribute("aria-hidden", "true");
+
     let lastFocus = null;
     const focusable = 'button, a, input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    function trapFocus(e){
+      if(e.key !== "Tab") return;
+
+      const items = [...drawer.querySelectorAll(focusable)].filter(el => !el.hasAttribute("disabled"));
+      if(items.length === 0) return;
+
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault();
+        last.focus();
+      } else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function closeDrawer(){
+      drawer.classList.remove("open");
+      backdrop.classList.remove("show");
+      document.body.style.overflow = "";
+
+      openBtn.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+
+      drawer.removeEventListener("keydown", trapFocus);
+      window.removeEventListener("keydown", onKeydown);
+
+      if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+
+    function onKeydown(e){
+      if(e.key === "Escape") closeDrawer();
+    }
 
     function openDrawer(){
       lastFocus = document.activeElement;
@@ -64,25 +106,14 @@
 
       const first = drawer.querySelector(focusable);
       if(first) first.focus();
-    }
 
-    function closeDrawer(){
-      drawer.classList.remove("open");
-      backdrop.classList.remove("show");
-      document.body.style.overflow = "";
-
-      openBtn.setAttribute("aria-expanded", "false");
-      drawer.setAttribute("aria-hidden", "true");
-
-      if(lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+      drawer.addEventListener("keydown", trapFocus);
+      window.addEventListener("keydown", onKeydown);
     }
 
     openBtn.addEventListener("click", openDrawer);
     closeBtn.addEventListener("click", closeDrawer);
     backdrop.addEventListener("click", closeDrawer);
-    window.addEventListener("keydown", (e) => {
-      if(e.key === "Escape") closeDrawer();
-    });
   }
 
   await includePartials();
