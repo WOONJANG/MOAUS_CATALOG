@@ -26,7 +26,7 @@ window.CLUBS = [
     store: "정관장 레드부스터스 팀스토어",
     image: "./assets/img/jkj_bgimg.png",
     logo: "./assets/img/jkj_logo.png",
-    url: "#",
+    url: "https://redboostersstore.com/",
     tags: [
       { text: "Kit Sponsor", tone: "accent" },
       { text: "Store", tone: "normal" },
@@ -38,7 +38,7 @@ window.CLUBS = [
     store: "KBO X DISNEY",
     image: "./assets/img/kbo_disney_bgimg.png",
     logo: "./assets/img/kbo_disney_logo.png",
-    url: "#",
+    url: "moaus.shop",
     tags: [{ text: "MD", tone: "accent" }]
   },
   {
@@ -46,7 +46,7 @@ window.CLUBS = [
     store: "KBL X MARVEL",
     image: "./assets/img/kbl_marvel_bgimg.png",
     logo: "./assets/img/kbl_marvel_logo.png",
-    url: "#",
+    url: "moaus.shop",
     tags: [{ text: "MD", tone: "accent" }]
   },
   {
@@ -54,7 +54,8 @@ window.CLUBS = [
     store: "Dr.B-Pang",
     image: "./assets/img/drbp_bgimg.png",
     logo: "./assets/img/drbp_logo.png",
-    url: "#",
+    url: "moaus.shop",
     tags: [{ text: "MD", tone: "accent" }]
   }
 ];
+
