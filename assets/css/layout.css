@@ -298,6 +298,11 @@ html[data-theme="light"] .themeIcon--moon{ display:none; }
   /* 너무 빡빡하면 여백 조금 */
   padding-bottom:6px;
 }
+.drawerCredit__dev{
+  color: rgba(255,255,255,.70);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
 
 /* Footer */
 footer{
@@ -511,6 +516,7 @@ footer{
   #openDrawer .iconImg{ transition:none; transform:none; }
   .drawer{ transition:none; }
 }
+
 
 
 
