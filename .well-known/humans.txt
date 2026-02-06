@@ -1,0 +1,10 @@
+/* TEAM */
+Developer: WOONIVERSE (wooniverse950518@gmail.com)
+Company: V-EXX
+Site: https://moausofficial.com/
+
+/* THANKS */
+Powered by: GitHub Pages
+
+/* BUILD */
+Last update: 2026-02-07
