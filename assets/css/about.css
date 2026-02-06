@@ -160,21 +160,21 @@
 
 /* ABOUT(WHAT WE DO) 중앙 정렬 */
 #about .sectionTitle{
-  text-align:center;              /* h2 가운데 */
+  text-align:center;             
 }
 
 #about .grid2{
-  justify-items:center;           /* grid 아이템(카드) 자체를 가운데 */
+  justify-items:center;
 }
 
 #about .grid2 .card{
-  width:min(900px, 100%);         /* 카드 폭 제한해서 "페이지 중앙" 느낌 살리기 */
+  width:min(900px, 100%);
 }
 
 #about .grid2 .list{
-  max-width:760px;                /* ul 덩어리 폭도 적당히 제한 */
-  margin:0 auto;                  /* ul 덩어리를 카드 안에서 가운데 */
-  text-align:left;                /* 텍스트는 왼쪽 정렬 유지(가독성) */
+  max-width:760px;             
+  margin:0 auto;                
+  text-align:left;             
 }
 
 
@@ -185,5 +185,6 @@
   .grid2{ grid-template-columns: 1fr; }
   .partners{ grid-template-columns: repeat(2, 1fr); }
 }
+
 
 
