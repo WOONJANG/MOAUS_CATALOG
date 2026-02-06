@@ -276,8 +276,10 @@
   applyTheme(document.documentElement.dataset.theme); // 버튼 aria/title 동기화
 
   setActiveLinks();
+  hideCurrentLinkInDrawer();
   initHeaderScroll();
   initDrawer();
   initDevCredit();
 })();
+
 
