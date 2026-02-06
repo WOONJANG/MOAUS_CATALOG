@@ -284,6 +284,20 @@ html[data-theme="light"] .themeIcon--moon{ display:none; }
 .drawer a.drawerSocial:hover{
   transform: translateY(-1px);
 }
+/* Drawer bottom credit */
+.drawerCredit{
+  margin-top:auto;               /* ✅ 남는 공간을 위로 밀어 하단 고정 */
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.08);
+
+  font-size:11px;
+  line-height:1.5;
+  color: rgba(255,255,255,.45);
+  text-align:center;
+
+  /* 너무 빡빡하면 여백 조금 */
+  padding-bottom:6px;
+}
 
 /* Footer */
 footer{
@@ -497,6 +511,7 @@ footer{
   #openDrawer .iconImg{ transition:none; transform:none; }
   .drawer{ transition:none; }
 }
+
 
 
 
