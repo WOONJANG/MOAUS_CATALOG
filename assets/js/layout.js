@@ -82,6 +82,41 @@
     }));
   }
 
+  function hideCurrentLinkInDrawer(){
+  const drawer = document.getElementById("drawer") || document.querySelector(".drawer");
+  if(!drawer) return;
+
+  // 1) 이미 active를 찍어두는 구조면 그걸 재활용 (가장 깔끔)
+  const active = drawer.querySelector("a.active");
+  if(active){
+    active.classList.add("is-current");
+    return;
+  }
+
+  // 2) fallback: 현재 파일명과 href 파일명 비교
+  const curFile = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+
+  drawer.querySelectorAll("a[href]").forEach(a => {
+    const href = (a.getAttribute("href") || "").trim();
+    if(!href) return;
+
+    // 외부/앵커/특수 링크는 제외
+    if(href.startsWith("#")) return;
+    if(/^https?:\/\//i.test(href)) return;
+    if(/^mailto:/i.test(href)) return;
+    if(/^tel:/i.test(href)) return;
+
+    const u = new URL(href, location.href);
+    const file = (u.pathname.split("/").pop() || "index.html").toLowerCase();
+
+    // 같은 파일 + 해시 없는 "페이지 링크"만 숨김
+    if(file === curFile && !u.hash){
+      a.classList.add("is-current");
+    }
+  });
+}
+
+  
   function setActiveLinks(){
     const cur = (location.pathname.split("/").pop() || "index.html").toLowerCase();
 
@@ -245,3 +280,4 @@
   initDrawer();
   initDevCredit();
 })();
+
