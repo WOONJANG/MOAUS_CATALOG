@@ -79,7 +79,7 @@
   line-height:1.7;
 }
 
-/* partners 이미지 정리 (원래 hight 오타도 정리) */
+/* partners 이미지 정리 */
 .partnerRow{
   display:flex;
   gap:10px;
@@ -99,3 +99,4 @@
   .section__inner{ grid-template-columns: 1fr; }
   .partnerRow img{ width:46%; }
 }
+
