@@ -4,16 +4,20 @@
      ========================= */
   --bg:#0b0b0b;
   --fg:#ffffff;
-  --muted:rgba(255,255,255,.7);
-  --line:rgba(255,255,255,.12);
 
-  --panel:#0a0a0a;                 /* drawer 같은 패널 배경 */
+  --muted:rgba(255,255,255,.70);
+  --muted2:rgba(255,255,255,.45);
+
+  --line:rgba(255,255,255,.12);
+  --line2:rgba(255,255,255,.18);
+
+  --panel:#0a0a0a;                       /* drawer 같은 패널 배경 */
   --panelBorder:rgba(255,255,255,.10);
-  --overlay:rgba(0,0,0,.55);       /* drawer backdrop */
+  --overlay:rgba(0,0,0,.55);             /* drawer backdrop */
 
   --headerBg:rgba(0,0,0,.15);
   --headerBgScrolled:rgba(0,0,0,.65);
-  --navUnderline:rgba(255,255,255,.8);
+  --navUnderline:rgba(255,255,255,.80);
 
   --linkBorder:rgba(255,255,255,.10);
   --linkBg:rgba(255,255,255,.02);
@@ -21,9 +25,57 @@
   --credit:#999;
   --creditHover:#ccc;
 
-  /* Layout */
+  /* Accent */
+  --accent:#C8A24A;
+  --accentBg:rgba(200,162,74,.10);
+  --accentStroke:rgba(200,162,74,.35);
+
+  /* Shadows */
+  --shadowMd:0 10px 28px rgba(0,0,0,.28);
+  --shadowLg:0 18px 50px rgba(0,0,0,.55);
+  --shadowXl:0 28px 90px rgba(0,0,0,.60);
+
+  /* Header progress */
+  --progressTrack:rgba(255,255,255,.08);
+  --progressFill:rgba(255,255,255,.75);
+
+  /* Motion */
+  --easeOut:cubic-bezier(.2,.8,.2,1);
+  --tFast:160ms;
+  --tMed:260ms;
+  --tSlow:420ms;
+
+  /* Menu icon hover */
+  --menuHoverScale:1.14;                 /* 원하는 만큼 조절 */
+  --menuHoverDur:520ms;                  /* “서서히” 핵심 */
+
+  /* Drawer sizing */
   --headerH:72px;
   --max:1200px;
+
+  /* Drawer premium look */
+  --drawerW:min(380px, 92vw);
+  --drawerRadius:22px;
+  --drawerGlassA:rgba(255,255,255,.06);
+  --drawerGlassB:rgba(255,255,255,.02);
+  --drawerBg:rgba(12, 14, 18, .88);
+  --drawerBorder:rgba(255,255,255,.12);
+  --drawerDivider:rgba(255,255,255,.08);
+
+  --drawerBtnH:44px;
+
+  --drawerItemBg:rgba(255,255,255,.04);
+  --drawerItemHoverBg:rgba(255,255,255,.07);
+  --drawerItemActiveBg:rgba(255,255,255,.09);
+
+  --drawerItemBorder:rgba(255,255,255,.10);
+  --drawerItemHoverBorder:rgba(255,255,255,.18);
+  --drawerItemActiveBorder:rgba(255,255,255,.20);
+
+  --drawerFocusOutline:rgba(255,255,255,.34);
+  --drawerActiveBar:rgba(255,255,255,.80);
+
+  --drawerHoverScale:1.02;               /* 메뉴 항목 hover scale */
 
   /* Browser UI hint */
   color-scheme: dark;
@@ -31,13 +83,16 @@
 
 /* =========================
    LIGHT THEME OVERRIDE
-   html[data-theme="light"] 를 JS에서 붙이면 적용됨
    ========================= */
 html[data-theme="light"]{
   --bg:#ffffff;
   --fg:rgba(0,0,0,.90);
+
   --muted:rgba(0,0,0,.62);
+  --muted2:rgba(0,0,0,.48);
+
   --line:rgba(0,0,0,.12);
+  --line2:rgba(0,0,0,.18);
 
   --panel:#f6f6f6;
   --panelBorder:rgba(0,0,0,.12);
@@ -52,6 +107,25 @@ html[data-theme="light"]{
 
   --credit:rgba(0,0,0,.55);
   --creditHover:rgba(0,0,0,.75);
+
+  --progressTrack:rgba(0,0,0,.08);
+  --progressFill:rgba(0,0,0,.70);
+
+  /* Drawer premium look (light용) */
+  --drawerBg:rgba(255,255,255,.92);
+  --drawerBorder:rgba(0,0,0,.10);
+  --drawerDivider:rgba(0,0,0,.08);
+
+  --drawerItemBg:rgba(0,0,0,.03);
+  --drawerItemHoverBg:rgba(0,0,0,.05);
+  --drawerItemActiveBg:rgba(0,0,0,.06);
+
+  --drawerItemBorder:rgba(0,0,0,.10);
+  --drawerItemHoverBorder:rgba(0,0,0,.16);
+  --drawerItemActiveBorder:rgba(0,0,0,.18);
+
+  --drawerFocusOutline:rgba(0,0,0,.24);
+  --drawerActiveBar:rgba(0,0,0,.72);
 
   color-scheme: light;
 }
@@ -68,7 +142,9 @@ html,body{
 a{ color:inherit; text-decoration:none; }
 button{ font:inherit; }
 
-/* Header */
+/* =========================
+   Header
+   ========================= */
 .header{
   position:fixed; left:0; top:0; right:0;
   height:var(--headerH);
@@ -122,7 +198,7 @@ button{ font:inherit; }
   position:absolute;
   left:0; right:0; bottom:0;
   height:2px;
-  background: rgba(255,255,255,.08);
+  background: var(--progressTrack);
   overflow:hidden;
 }
 .headerProgress::before{
@@ -130,11 +206,12 @@ button{ font:inherit; }
   display:block;
   height:100%;
   width: var(--scrollP, 0%);
-  background: rgba(255,255,255,.75);
+  background: var(--progressFill);
 }
 
-
-/* Buttons */
+/* =========================
+   Buttons
+   ========================= */
 .iconBtn{
   cursor:pointer;
   display:inline-flex;
@@ -150,12 +227,24 @@ button{ font:inherit; }
 .hamburger{ width:44px; justify-content:center; }
 
 .iconImg{ width:24px; height:24px; display:block; }
-#openDrawer .iconImg{ transition: transform 260ms ease; transform-origin:center; }
-#openDrawer:hover .iconImg{ transform: scale(1.7); }
+
+/* ✅ 메뉴 버튼 hover “서서히” 커지기 */
+#openDrawer .iconImg{
+  transform: scale(1);
+  transform-origin:center;
+  transition: transform var(--menuHoverDur) var(--easeOut);
+  will-change: transform;
+}
+#openDrawer:hover .iconImg,
+#openDrawer:focus-visible .iconImg{
+  transform: scale(var(--menuHoverScale));
+}
+#openDrawer:active .iconImg{
+  transform: scale(calc((var(--menuHoverScale) - 1) * .35 + 1));
+}
 
 /* =========================
    THEME TOGGLE ICONS (옵션)
-   header.html에 #themeToggle 넣었을 때 사용
    ========================= */
 .themeToggle{
   display:inline-flex;
@@ -188,53 +277,183 @@ html[data-theme="light"] .themeIcon--moon{ display:none; }
   border:0;
 }
 
-/* Drawer */
+/* =========================
+   Drawer Backdrop
+   (display 토글 대신 opacity/visibility로 애니메이션 가능하게)
+   ========================= */
 .drawerBackdrop{
   position:fixed; inset:0;
-  background:var(--overlay);
   z-index:1200;
-  display:none;
-}
-.drawerBackdrop.show{ display:block; }
+  background:var(--overlay);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition: opacity .22s ease, visibility 0s linear .22s;
+}
+.drawerBackdrop.show{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transition: opacity .22s ease, visibility 0s linear 0s;
+}
+
+/* =========================
+   Drawer (Premium)
+   ========================= */
 .drawer{
   position:fixed;
   top:0; right:0;
-  width:min(340px, 86vw);
+  width: var(--drawerW);
   height:100%;
-  background:var(--panel);
-  border-left:1px solid var(--panelBorder);
   z-index:1300;
-  transform:translateX(100%);
-  transition:transform .2s ease;
-  padding:18px;
+
+  padding: 18px 16px 16px;
   display:flex;
   flex-direction:column;
-  gap:10px;
+  gap:12px;
+
+  background:
+    linear-gradient(180deg, var(--drawerGlassA), var(--drawerGlassB)),
+    var(--drawerBg);
+  border-left: 1px solid var(--drawerBorder);
+  border-top-left-radius: var(--drawerRadius);
+  border-bottom-left-radius: var(--drawerRadius);
+
+  box-shadow: var(--shadowXl);
+
+  transform: translateX(110%);
+  transition: transform .28s var(--easeOut);
 }
-.drawer.open{ transform:translateX(0); }
+.drawer.open{ transform: translateX(0); }
 
 .drawerTop{
   display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:6px;
+  padding: 10px 8px 14px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--drawerDivider);
 }
 .drawerTitle{
   font-family:"Exo","Ubuntu",sans-serif;
-  letter-spacing:1px;
+  letter-spacing:1.4px;
+  text-transform: uppercase;
+  font-size:13px;
+  opacity:.92;
 }
+
+/* 닫기 버튼(있다면) */
+.drawerTop button,
+.drawerTop .iconBtn,
+.drawerTop [data-drawer-close]{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  border: 1px solid var(--line2);
+  background: rgba(255,255,255,.06);
+  color: var(--fg);
+  cursor: pointer;
+  transition: transform var(--tFast) ease, background var(--tFast) ease, border-color var(--tFast) ease;
+}
+html[data-theme="light"] .drawerTop button,
+html[data-theme="light"] .drawerTop .iconBtn,
+html[data-theme="light"] .drawerTop [data-drawer-close]{
+  background: rgba(0,0,0,.03);
+}
+.drawerTop button:hover,
+.drawerTop .iconBtn:hover,
+.drawerTop [data-drawer-close]:hover{
+  transform: scale(1.03);
+  background: rgba(255,255,255,.10);
+  border-color: var(--line2);
+}
+html[data-theme="light"] .drawerTop button:hover,
+html[data-theme="light"] .drawerTop .iconBtn:hover,
+html[data-theme="light"] .drawerTop [data-drawer-close]:hover{
+  background: rgba(0,0,0,.05);
+}
+
+/* 메뉴 링크 (중복 선언 제거: 여기 하나로 끝) */
 .drawer a{
-  padding:12px 10px;
-  border:1px solid var(--linkBorder);
-  background:var(--linkBg);
-  font-family:"Ubuntu","Exo",sans-serif;
-  font-size:14px;
-  letter-spacing:.4px;
+  position: relative;
+
+  min-height: var(--drawerBtnH);
   display:flex;
   align-items:center;
-  justify-content:center;
+  justify-content: space-between;
+
+  padding: 13px 14px;
+  border-radius: 16px;
+
+  border: 1px solid var(--drawerItemBorder);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)),
+    var(--drawerItemBg);
+
+  font-family:"Ubuntu","Exo",sans-serif;
+  font-size: 13.5px;
+  letter-spacing: .6px;
   text-align:center;
-  min-height:44px;
+
+  transform: translateZ(0) scale(1);
+  transition:
+    transform var(--tSlow) var(--easeOut),
+    background var(--tMed) ease,
+    border-color var(--tMed) ease,
+    box-shadow var(--tMed) ease;
+  will-change: transform;
 }
+
+/* ✅ hover: “서서히” 커지기 + 살짝 떠오르기 */
+.drawer a:hover{
+  transform: translateY(-1px) scale(var(--drawerHoverScale));
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0)),
+    var(--drawerItemHoverBg);
+  border-color: var(--drawerItemHoverBorder);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+html[data-theme="light"] .drawer a:hover{
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+/* active/current 스타일 */
+.drawer a.active{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,0)),
+    var(--drawerItemActiveBg);
+  border-color: var(--drawerItemActiveBorder);
+}
+
+/* 왼쪽 포커스 바 */
+.drawer a::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: transparent;
+  opacity: 0;
+  transition: opacity var(--tFast) ease, height var(--tFast) ease;
+}
+.drawer a.active::before{
+  background: var(--drawerActiveBar);
+  opacity: .95;
+  height: 20px;
+}
+
+/* 키보드 포커스 */
+.drawer a:focus-visible{
+  outline: 2px solid var(--drawerFocusOutline);
+  outline-offset: 3px;
+}
+
+/* 링크 간격 */
+.drawer a + a{ margin-top: 8px; }
 
 /* Drawer(aside)에서 현재 페이지 링크 숨김 */
 .drawer a.is-current,
@@ -242,69 +461,43 @@ html[data-theme="light"] .themeIcon--moon{ display:none; }
   display:none;
 }
 
-/* responsive */
-@media (max-width: 920px){
-  .header__inner{ grid-template-columns: auto 1fr auto; }
-  .nav{ display:none; }
-  .nav a.active::after{ display:none; }
-}
 /* =========================
    Drawer Social (Instagram)
-   - 메뉴 버튼 높이에 맞춰 자동 스케일
    ========================= */
-
-/* 1) 메뉴 버튼 높이를 토큰으로 고정 (원하면 40~52px로 조절) */
-.drawer{
-  --drawerBtnH: 44px;
-}
-
-/* 2) 드로어 메뉴 a를 버튼처럼 "높이 통일" (텍스트 메뉴도 덜 허접해짐) */
-.drawer a{
-  min-height: var(--drawerBtnH);
-  display:flex;
-  align-items:center;
-}
-
-/* 3) 인스타는 아이콘 버튼 형태로 중앙 정렬 */
 .drawer a.drawerSocial{
   justify-content:center;
-  padding:0;                 /* 텍스트 버튼 패딩 제거 */
+  padding:0;
 }
-
-/* 4) 이미지 크기: 버튼 높이에 비례해서 자동 조절 */
 .drawer a.drawerSocial .drawerSocial__img{
-  height: calc(var(--drawerBtnH) * 0.56);  /* 버튼 높이의 56% */
+  height: calc(var(--drawerBtnH) * 0.56);
   width: auto;
   object-fit: contain;
   display:block;
-  max-height: 28px;          /* 너무 커지는 거 방지(원하면 삭제) */
+  max-height: 28px;
 }
 
-/* 5) 아이콘 버튼 느낌을 더 고급지게(선택) */
-.drawer a.drawerSocial:hover{
-  transform: translateY(-1px);
-}
 /* Drawer bottom credit */
 .drawerCredit{
-  margin-top:auto;               /* ✅ 남는 공간을 위로 밀어 하단 고정 */
+  margin-top:auto;
   padding-top:14px;
-  border-top:1px solid rgba(255,255,255,.08);
+  border-top:1px solid var(--drawerDivider);
 
   font-size:11px;
   line-height:1.5;
-  color: rgba(255,255,255,.45);
+  color: var(--muted2);
   text-align:center;
 
-  /* 너무 빡빡하면 여백 조금 */
   padding-bottom:6px;
 }
 .drawerCredit__dev{
-  color: rgba(255,255,255,.70);
+  color: var(--muted);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
-/* Footer */
+/* =========================
+   Footer
+   ========================= */
 footer{
   padding:26px 0;
   background:var(--bg);
@@ -340,187 +533,27 @@ footer{
   text-underline-offset: 2px;
 }
 .credit-toggle:hover{ color:var(--creditHover); }
-
 .credit-toggle:focus-visible{
-  outline:2px solid var(--credit);
+  outline:2px solid var(--creditHover);
   outline-offset:3px;
   border-radius:6px;
 }
 
-.drawer a{
-  background-image: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+/* responsive */
+@media (max-width: 920px){
+  .header__inner{ grid-template-columns: auto 1fr auto; }
+  .nav{ display:none; }
+  .nav a.active::after{ display:none; }
 }
+
 /* =========================
-   PREMIUM DRAWER (CSS ONLY)
+   Reduced motion
    ========================= */
-
-/* Backdrop: 더 부드럽고 고급스럽게 (살짝 blur) */
-.drawerBackdrop{
-  background: rgba(0,0,0,.52);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: opacity .22s ease;
-  opacity: 0;
-}
-.drawerBackdrop.show{
-  opacity: 1;
-}
-
-/* Drawer: 유리+그라데이션+라운드+그림자 */
-.drawer{
-  width: min(380px, 92vw);
-  padding: 18px 16px 16px;
-  gap: 12px;
-
-  /* "변수 충돌" 방지: drawer 안에서는 panel을 고정 */
-  --panel: rgba(12, 14, 18, .88);
-
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
-    var(--panel);
-  border-left: 1px solid rgba(255,255,255,.12);
-
-  /* 오른쪽 위가 둥글면 고급짐. (모바일에서 특히) */
-  border-top-left-radius: 22px;
-  border-bottom-left-radius: 22px;
-
-  box-shadow: 0 28px 90px rgba(0,0,0,.60);
-
-  /* 움직임을 조금 더 세련되게 */
-  transform: translateX(110%);
-  transition: transform .28s cubic-bezier(.2,.8,.2,1);
-}
-
-/* open 상태는 기존 .open을 그대로 씁니다 */
-.drawer.open{
-  transform: translateX(0);
-}
-
-/* 상단 영역: 타이틀 영역 정리 */
-.drawerTop{
-  padding: 10px 8px 14px;
-  margin-bottom: 2px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.drawerTitle{
-  font-size: 13px;
-  opacity: .92;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-}
-
-/* 닫기 버튼이 있다면(버튼/아이콘 공통) 고급 버튼화 */
-.drawerTop button,
-.drawerTop .iconBtn,
-.drawerTop [data-drawer-close]{
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
-  color: var(--fg);
-  cursor: pointer;
-  transition: transform .16s ease, background .16s ease, border-color .16s ease;
-}
-.drawerTop button:hover,
-.drawerTop .iconBtn:hover,
-.drawerTop [data-drawer-close]:hover{
-  transform: scale(1.03);
-  background: rgba(255,255,255,.10);
-  border-color: rgba(255,255,255,.22);
-}
-
-/* 메뉴 링크: "카드형 리스트" + 좌측 포커스 바 + hover 모션 */
-.drawer a{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 13px 14px;
-  border-radius: 16px;
-
-  border: 1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.04);
-
-  font-size: 13.5px;
-  letter-spacing: .6px;
-
-  transition:
-    transform .16s ease,
-    background .16s ease,
-    border-color .16s ease,
-    box-shadow .16s ease;
-}
-
-/* hover: 살짝 떠오르는 느낌 */
-.drawer a:hover{
-  transform: translateY(-1px);
-  background: rgba(255,255,255,.07);
-  border-color: rgba(255,255,255,.18);
-  box-shadow: 0 12px 30px rgba(0,0,0,.35);
-}
-
-/* active/current 스타일: 왼쪽 바 + 더 선명한 배경 */
-.drawer a.active{
-  background: rgba(255,255,255,.09);
-  border-color: rgba(255,255,255,.20);
-}
-
-/* 왼쪽 포커스 바 (고급 느낌 핵심) */
-.drawer a::before{
-  content: "";
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  width: 3px;
-  height: 18px;
-  transform: translateY(-50%);
-  border-radius: 999px;
-  background: transparent;
-  opacity: 0;
-  transition: opacity .16s ease, height .16s ease;
-}
-.drawer a.active::before{
-  background: rgba(255,255,255,.80);
-  opacity: .95;
-  height: 20px;
-}
-
-/* 키보드 포커스도 고급스럽게 */
-.drawer a:focus-visible{
-  outline: 2px solid rgba(255,255,255,.34);
-  outline-offset: 3px;
-}
-
-/* 링크들 사이 간격이 더 정리돼 보이게 */
-.drawer a + a{
-  margin-top: 8px;
-}
-
-/* 현재 페이지 숨김은 그대로 유지 (네가 이미 넣음) */
-.drawer a.is-current{ display:none; }
-
-/* 모션 줄이기 대응 */
 @media (prefers-reduced-motion: reduce){
+  #openDrawer .iconImg{ transition:none; transform:none; }
   .drawerBackdrop{ transition:none; }
   .drawer{ transition:none; transform: translateX(100%); }
   .drawer.open{ transform: translateX(0); }
   .drawer a{ transition:none; }
   .drawer a:hover{ transform:none; }
 }
-
-
-@media (prefers-reduced-motion: reduce){
-  #openDrawer .iconImg{ transition:none; transform:none; }
-  .drawer{ transition:none; }
-}
-
-
-
-
-
-
-
-
