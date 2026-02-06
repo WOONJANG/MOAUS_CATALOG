@@ -243,6 +243,42 @@ html[data-theme="light"] .themeIcon--moon{ display:none; }
   .nav{ display:none; }
   .nav a.active::after{ display:none; }
 }
+/* =========================
+   Drawer Social (Instagram)
+   - 메뉴 버튼 높이에 맞춰 자동 스케일
+   ========================= */
+
+/* 1) 메뉴 버튼 높이를 토큰으로 고정 (원하면 40~52px로 조절) */
+.drawer{
+  --drawerBtnH: 44px;
+}
+
+/* 2) 드로어 메뉴 a를 버튼처럼 "높이 통일" (텍스트 메뉴도 덜 허접해짐) */
+.drawer a{
+  min-height: var(--drawerBtnH);
+  display:flex;
+  align-items:center;
+}
+
+/* 3) 인스타는 아이콘 버튼 형태로 중앙 정렬 */
+.drawer a.drawerSocial{
+  justify-content:center;
+  padding:0;                 /* 텍스트 버튼 패딩 제거 */
+}
+
+/* 4) 이미지 크기: 버튼 높이에 비례해서 자동 조절 */
+.drawer a.drawerSocial .drawerSocial__img{
+  height: calc(var(--drawerBtnH) * 0.56);  /* 버튼 높이의 56% */
+  width: auto;
+  object-fit: contain;
+  display:block;
+  max-height: 28px;          /* 너무 커지는 거 방지(원하면 삭제) */
+}
+
+/* 5) 아이콘 버튼 느낌을 더 고급지게(선택) */
+.drawer a.drawerSocial:hover{
+  transform: translateY(-1px);
+}
 
 /* Footer */
 footer{
@@ -456,6 +492,7 @@ footer{
   #openDrawer .iconImg{ transition:none; transform:none; }
   .drawer{ transition:none; }
 }
+
 
 
 
