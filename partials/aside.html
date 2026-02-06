@@ -1,0 +1,76 @@
+<!-- Drawer Overlay -->
+<div class="drawerOverlay" id="drawerOverlay" data-drawer-overlay aria-hidden="true"></div>
+
+<!-- Drawer -->
+<aside class="drawer" id="drawer" aria-hidden="true" tabindex="-1">
+  <div class="drawer__inner" role="dialog" aria-modal="true" aria-label="Site menu">
+    <div class="drawerHeader">
+      <a class="drawerBrand" href="index.html" aria-label="Go to home">
+        <span class="drawerBrand__mark" aria-hidden="true">M</span>
+        <span class="drawerBrand__text">MOAUS</span>
+      </a>
+
+      <button class="drawerClose" type="button" id="closeDrawer" data-drawer-close aria-label="Close menu">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <nav class="drawerNav" aria-label="Primary navigation">
+      <div class="drawerGroup">
+        <div class="drawerGroup__title">PAGES</div>
+
+        <a class="drawerLink" href="index.html">
+          <span class="drawerLink__label">HOME</span>
+          <span class="drawerLink__meta">Overview</span>
+        </a>
+
+        <a class="drawerLink" href="showcase.html">
+          <span class="drawerLink__label">SHOWCASE</span>
+          <span class="drawerLink__meta">Work</span>
+        </a>
+
+        <a class="drawerLink" href="about.html">
+          <span class="drawerLink__label">ABOUT</span>
+          <span class="drawerLink__meta">Who we are</span>
+        </a>
+
+        <a class="drawerLink" href="contact.html">
+          <span class="drawerLink__label">CONTACT</span>
+          <span class="drawerLink__meta">Get in touch</span>
+        </a>
+      </div>
+
+      <div class="drawerGroup">
+        <div class="drawerGroup__title">INDEX SECTIONS</div>
+
+        <!-- index.html 섹션 링크: 현재 페이지 숨김 로직과 충돌 안 나게 해시 유지 -->
+        <a class="drawerLink" href="index.html#brand">
+          <span class="drawerLink__label">BRAND</span>
+          <span class="drawerLink__meta">Identity</span>
+        </a>
+
+        <a class="drawerLink" href="index.html#archive">
+          <span class="drawerLink__label">ARCHIVE</span>
+          <span class="drawerLink__meta">History</span>
+        </a>
+
+        <a class="drawerLink" href="index.html#shop">
+          <span class="drawerLink__label">SHOP</span>
+          <span class="drawerLink__meta">Drop</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="drawerFooter">
+      <div class="drawerCtas">
+        <a class="drawerBtn" href="contact.html">문의하기</a>
+        <a class="drawerBtn ghost" href="mailto:vexx.sport@gmail.com">메일</a>
+      </div>
+
+      <div class="drawerFine">
+        <div>V-EXX / MOAUS</div>
+        <div class="drawerFine__muted">© 2026. All rights reserved.</div>
+      </div>
+    </div>
+  </div>
+</aside>
