@@ -51,7 +51,6 @@
 
     if(!drawer || !backdrop || !openBtn || !closeBtn) return;
 
-    // 초기 aria 상태
     openBtn.setAttribute("aria-expanded", "false");
     drawer.setAttribute("aria-hidden", "true");
 
@@ -116,8 +115,27 @@
     backdrop.addEventListener("click", closeDrawer);
   }
 
+  // ✅ 여기 추가
+  function initDevCredit(){
+    const el = document.getElementById("devCredit");
+    if (!el) return;
+
+    const defaultText = (el.dataset.default || el.textContent).trim();
+    const badgeText = (el.dataset.badge || "Build v1.0.0").trim();
+
+    let showingBadge = false;
+    el.style.cursor = "pointer";
+
+    el.addEventListener("click", () => {
+      showingBadge = !showingBadge;
+      el.textContent = showingBadge ? badgeText : defaultText;
+    });
+  }
+
+  // ✅ 실행 순서: partial 로드 후에 devCredit 초기화
   await includePartials();
   setActiveLinks();
   initHeaderScroll();
   initDrawer();
+  initDevCredit();
 })();
