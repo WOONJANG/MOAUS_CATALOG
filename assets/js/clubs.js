@@ -1,7 +1,7 @@
 window.CLUBS = [
   {
     name: "V-EXX",
-    store: "V-EXX OFFICIAL STORE",
+    store: "브이엑스 공식 스토어",
     image: "/assets/img/vexx_bgimg.png",
     logo: "/assets/img/vexx_logo.png",
     url: "https://vexxsports.com/",
@@ -35,7 +35,7 @@ window.CLUBS = [
   },
   {
     name: "KBO X DISNEY",
-    store: "KBO X DISNEY",
+    store: "한국프로야구 X 디즈니",
     image: "/assets/img/kbo_disney_bgimg.png",
     logo: "/assets/img/kbo_disney_logo.png",
     url: "https://moaus.shop/",
@@ -46,7 +46,7 @@ window.CLUBS = [
   },
   {
     name: "KBL X MARVEL",
-    store: "KBL X MARVEL",
+    store: "한국프로농구 X 마블",
     image: "/assets/img/kbl_marvel_bgimg.png",
     logo: "/assets/img/kbl_marvel_logo.png",
     url: "https://moaus.shop/",
@@ -57,7 +57,7 @@ window.CLUBS = [
   },
   {
     name: "Dr.B-Pang",
-    store: "Dr.B-Pang",
+    store: "닥터비팡",
     image: "/assets/img/drbp_bgimg.png",
     logo: "/assets/img/drbp_logo.png",
     url: "https://moaus.shop/",
@@ -67,6 +67,7 @@ window.CLUBS = [
     ]
   }
 ];
+
 
 
 
