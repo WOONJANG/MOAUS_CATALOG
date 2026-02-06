@@ -1,6 +1,5 @@
 Contact: mailto:vexx.sport@gmail.com 
-
-Preferred-Languages: ko, en
+Preferred-Languages: ko, en, jp
 Policy: https://moausofficial.com/privacy.html
 Hiring: https://moausofficial.com/contact.html
 Expires: Not yet decided
