@@ -274,11 +274,172 @@ footer{
 .drawer a{
   background-image: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
 }
+/* =========================
+   PREMIUM DRAWER (CSS ONLY)
+   ========================= */
+
+/* Backdrop: 더 부드럽고 고급스럽게 (살짝 blur) */
+.drawerBackdrop{
+  background: rgba(0,0,0,.52);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity .22s ease;
+  opacity: 0;
+}
+.drawerBackdrop.show{
+  opacity: 1;
+}
+
+/* Drawer: 유리+그라데이션+라운드+그림자 */
+.drawer{
+  width: min(380px, 92vw);
+  padding: 18px 16px 16px;
+  gap: 12px;
+
+  /* "변수 충돌" 방지: drawer 안에서는 panel을 고정 */
+  --panel: rgba(12, 14, 18, .88);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+    var(--panel);
+  border-left: 1px solid rgba(255,255,255,.12);
+
+  /* 오른쪽 위가 둥글면 고급짐. (모바일에서 특히) */
+  border-top-left-radius: 22px;
+  border-bottom-left-radius: 22px;
+
+  box-shadow: 0 28px 90px rgba(0,0,0,.60);
+
+  /* 움직임을 조금 더 세련되게 */
+  transform: translateX(110%);
+  transition: transform .28s cubic-bezier(.2,.8,.2,1);
+}
+
+/* open 상태는 기존 .open을 그대로 씁니다 */
+.drawer.open{
+  transform: translateX(0);
+}
+
+/* 상단 영역: 타이틀 영역 정리 */
+.drawerTop{
+  padding: 10px 8px 14px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.drawerTitle{
+  font-size: 13px;
+  opacity: .92;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+/* 닫기 버튼이 있다면(버튼/아이콘 공통) 고급 버튼화 */
+.drawerTop button,
+.drawerTop .iconBtn,
+.drawerTop [data-drawer-close]{
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: var(--fg);
+  cursor: pointer;
+  transition: transform .16s ease, background .16s ease, border-color .16s ease;
+}
+.drawerTop button:hover,
+.drawerTop .iconBtn:hover,
+.drawerTop [data-drawer-close]:hover{
+  transform: scale(1.03);
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.22);
+}
+
+/* 메뉴 링크: "카드형 리스트" + 좌측 포커스 바 + hover 모션 */
+.drawer a{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 13px 14px;
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+
+  font-size: 13.5px;
+  letter-spacing: .6px;
+
+  transition:
+    transform .16s ease,
+    background .16s ease,
+    border-color .16s ease,
+    box-shadow .16s ease;
+}
+
+/* hover: 살짝 떠오르는 느낌 */
+.drawer a:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.18);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+/* active/current 스타일: 왼쪽 바 + 더 선명한 배경 */
+.drawer a.active{
+  background: rgba(255,255,255,.09);
+  border-color: rgba(255,255,255,.20);
+}
+
+/* 왼쪽 포커스 바 (고급 느낌 핵심) */
+.drawer a::before{
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: transparent;
+  opacity: 0;
+  transition: opacity .16s ease, height .16s ease;
+}
+.drawer a.active::before{
+  background: rgba(255,255,255,.80);
+  opacity: .95;
+  height: 20px;
+}
+
+/* 키보드 포커스도 고급스럽게 */
+.drawer a:focus-visible{
+  outline: 2px solid rgba(255,255,255,.34);
+  outline-offset: 3px;
+}
+
+/* 링크들 사이 간격이 더 정리돼 보이게 */
+.drawer a + a{
+  margin-top: 8px;
+}
+
+/* 현재 페이지 숨김은 그대로 유지 (네가 이미 넣음) */
+.drawer a.is-current{ display:none; }
+
+/* 모션 줄이기 대응 */
+@media (prefers-reduced-motion: reduce){
+  .drawerBackdrop{ transition:none; }
+  .drawer{ transition:none; transform: translateX(100%); }
+  .drawer.open{ transform: translateX(0); }
+  .drawer a{ transition:none; }
+  .drawer a:hover{ transform:none; }
+}
 
 
 @media (prefers-reduced-motion: reduce){
   #openDrawer .iconImg{ transition:none; transform:none; }
   .drawer{ transition:none; }
 }
+
 
 
