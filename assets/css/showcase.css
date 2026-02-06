@@ -59,7 +59,7 @@
   margin:0 auto;
   padding:0 16px;
   display:grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap:18px;
 }
 .card{
@@ -99,4 +99,5 @@
   .section__inner{ grid-template-columns: 1fr; }
   .partnerRow img{ width:46%; }
 }
+
 
