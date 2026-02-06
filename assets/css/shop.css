@@ -1,46 +1,62 @@
 /* =========================
-   INDEX / CARDS (theme-aware)
-   - 하드코딩 rgba(255,255,255,*) 제거
-   - var(--fg), var(--bg), var(--muted), var(--line) 기반
+   INDEX CARD / GRID CSS (FULL)
+   - tag color theme-aware
+   - accent 복구(여러 셀렉터 지원)
    ========================= */
 
 /* 페이지 래퍼 + 로컬 토큰 */
 .wrap{
-  /* 기존 전역 토큰이 있다면 그대로 사용됨 */
-  /* (layout.css의 :root 토큰: --bg, --fg, --muted, --line, --max, --headerH 등) */
+  /* 전역 토큰 있으면 자동 사용 / 없으면 fallback */
+  --fg: var(--fg, #fff);
+  --bg: var(--bg, #0b0b0b);
+  --muted: var(--muted, rgba(255,255,255,.66));
+  --line: var(--line, rgba(255,255,255,.12));
+  --panel: var(--panel, #0f1012);
 
-  /* 로컬 토큰(전역 토큰 기반) */
-  --stroke:  color-mix(in srgb, var(--fg) 12%, transparent);
-  --stroke2: color-mix(in srgb, var(--fg) 18%, transparent);
-  --text:    var(--fg);
-  --muted2:  var(--muted2, color-mix(in srgb, var(--fg) 45%, transparent));
+  /* 기존 로컬 토큰(하드코딩 → 전역 기반) */
+  --stroke:  var(--stroke,  color-mix(in srgb, var(--fg) 12%, transparent));
+  --stroke2: var(--stroke2, color-mix(in srgb, var(--fg) 18%, transparent));
+  --text:    var(--text,    var(--fg));
+  --muted2:  var(--muted2,  color-mix(in srgb, var(--fg) 45%, transparent));
+  --shadow:  var(--shadow,  0 18px 50px rgba(0,0,0,.55));
 
-  --shadow:  var(--shadowLg, 0 18px 50px rgba(0,0,0,.55));
-
-  /* ✅ 덜 네모: 화면 따라 둥글기 자동 */
+  /* ✅ 덜 네모: 유동 radius */
   --radius: clamp(22px, 2.2vw, 34px);
 
-  /* accent (전역 있으면 그거 우선) */
+  /* accent (전역이 있으면 우선) */
   --accent:       var(--accent, #C8A24A);
   --accentBg:     var(--accentBg, rgba(200,162,74,.10));
   --accentStroke: var(--accentStroke, rgba(200,162,74,.35));
 
-  /* Tag tokens (전역이 있으면 그거 사용) */
+  /* =========================
+     TAG TOKENS (기본)
+     ========================= */
   --tagText:   var(--tagText,   color-mix(in srgb, var(--fg) 78%, transparent));
   --tagBg:     var(--tagBg,     color-mix(in srgb, var(--fg) 7%, transparent));
   --tagBorder: var(--tagBorder, color-mix(in srgb, var(--fg) 10%, transparent));
 
-  --tagAccentText:   var(--tagAccentText, color-mix(in srgb, var(--fg) 88%, transparent));
-  --tagAccentBg:     var(--tagAccentBg, var(--accentBg));
-  --tagAccentBorder: var(--tagAccentBorder, var(--accentStroke));
+  /* ✅ TAG ACCENT (확실히 보이게) */
+  --tagAccentBg:     var(--tagAccentBg,     color-mix(in srgb, var(--accent) 18%, transparent));
+  --tagAccentBorder: var(--tagAccentBorder, color-mix(in srgb, var(--accent) 55%, transparent));
+  --tagAccentText:   var(--tagAccentText,   color-mix(in srgb, var(--fg) 92%, transparent));
 
   /* 헤더 fixed 여백 */
-  width:min(var(--max), 100%);
+  width:min(var(--max, 1200px), 100%);
   margin:0 auto;
-  padding: calc(var(--headerH) + 34px) 16px 64px;
-
+  padding: calc(var(--headerH, 72px) + 34px) 16px 64px;
   font-family: "Pretendard Variable", Pretendard, "Nanum Gothic",
     system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* 라이트 테마에서 accent가 묻히면 더 진하게 */
+html[data-theme="light"] .wrap{
+  --tagText: rgba(0,0,0,.72);
+  --tagBg: rgba(0,0,0,.04);
+  --tagBorder: rgba(0,0,0,.10);
+
+  --tagAccentBg: color-mix(in srgb, var(--accent) 22%, transparent);
+  --tagAccentBorder: color-mix(in srgb, var(--accent) 60%, transparent);
+  --tagAccentText: rgba(0,0,0,.84);
 }
 
 .topbar{
@@ -59,7 +75,7 @@
 }
 .subtitle{
   margin:6px 0 0;
-  color: var(--muted, color-mix(in srgb, var(--fg) 66%, transparent));
+  color: var(--muted);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -73,7 +89,6 @@
   width: 48%;
   padding: 10px 12px;
   border-radius: 14px;
-
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--fg) 8%, transparent),
@@ -82,7 +97,7 @@
   border:1px solid var(--stroke);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: var(--shadowMd, 0 10px 28px rgba(0,0,0,.28));
+  box-shadow: 0 10px 28px rgba(0,0,0,.28);
 }
 .search input{
   width:100%;
@@ -130,7 +145,6 @@
   position:relative;
   border-radius: var(--radius);
   overflow:hidden;
-
   background: linear-gradient(
     180deg,
     color-mix(in srgb, var(--fg) 8%, transparent),
@@ -138,7 +152,6 @@
   );
   border:1px solid var(--stroke);
   box-shadow: var(--shadow);
-
   transform: translateZ(0);
   transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
   cursor: pointer;
@@ -147,28 +160,24 @@
 .card:hover, .card:focus-visible{
   transform: translateY(-4px);
   border-color: var(--accentStroke);
-  box-shadow: var(--shadowHover, 0 22px 60px rgba(0,0,0,.62));
+  box-shadow: 0 22px 60px rgba(0,0,0,.62);
 }
 
 .media{
   position:relative;
-
-  /* ✅ 덜 박스: 고정 height 대신 비율 */
-  height:auto;
-  aspect-ratio: 16 / 10;
-
-  background: var(--panel, #0f1012);
+  height:auto;                 /* ✅ 박스감 완화 */
+  aspect-ratio: 16 / 10;       /* ✅ 고정 높이 대신 비율 */
+  background: var(--panel);
   overflow:hidden;
 }
 .media img{
   width:100%;
   height:100%;
   object-fit: cover;
-  display:block;
-
   filter: saturate(1.02) contrast(1.02);
   transform: scale(1.02);
   transition: transform .28s ease, filter .28s ease;
+  display:block;
 }
 .card:hover .media img,
 .card:focus-visible .media img{
@@ -182,13 +191,11 @@
   display:grid;
   place-items:center;
   color: color-mix(in srgb, var(--fg) 75%, transparent);
-
   background:
     radial-gradient(700px 200px at 20% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
     radial-gradient(700px 240px at 80% 10%, rgba(15,118,110,.12), transparent 60%),
     radial-gradient(700px 240px at 70% 90%, rgba(29,78,216,.12), transparent 60%),
-    var(--panel, #0f1012);
-
+    var(--panel);
   font-weight: 700;
   letter-spacing: -.01em;
   font-size: 13px;
@@ -214,10 +221,8 @@
   width: 56px; height: 56px;
   border-radius: 999px;
   background: #fff;
-
   border:1px solid color-mix(in srgb, var(--fg) 22%, transparent);
-  box-shadow: var(--shadowBadge, 0 14px 30px rgba(0,0,0,.45));
-
+  box-shadow: 0 14px 30px rgba(0,0,0,.45);
   display:grid;
   place-items:center;
   overflow:hidden;
@@ -249,7 +254,7 @@
 }
 .desc{
   margin:6px 0 0;
-  color: var(--muted, color-mix(in srgb, var(--fg) 66%, transparent));
+  color: var(--muted);
   font-size: 12.5px;
   line-height: 1.35;
 }
@@ -260,6 +265,8 @@
   margin-top: 12px;
   flex-wrap: wrap;
 }
+
+/* ✅ TAG 기본: 테마 따라 자동 변경 */
 .tag{
   font-size: 11.5px;
   color: var(--tagText);
@@ -269,10 +276,17 @@
   border-radius: 999px;
   user-select:none;
 }
-.tag.accent{
+
+.tag.accent,
+.tag--accent,
+.tag[data-accent="1"],
+.tag[aria-current="true"]{
   border-color: var(--tagAccentBorder);
   background: var(--tagAccentBg);
   color: var(--tagAccentText);
+  font-weight: 700;
+  /* 선택: 은근한 강조(원하면 제거) */
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent) inset;
 }
 
 .empty{
@@ -281,7 +295,7 @@
   border-radius: 16px;
   border:1px solid var(--stroke);
   background: color-mix(in srgb, var(--fg) 5%, transparent);
-  color: var(--muted, color-mix(in srgb, var(--fg) 66%, transparent));
+  color: var(--muted);
 }
 
 @media (prefers-reduced-motion: reduce){
