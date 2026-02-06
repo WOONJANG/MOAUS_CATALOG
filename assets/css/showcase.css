@@ -55,11 +55,15 @@
   border-top:1px solid rgba(255,255,255,.06);
 }
 .section__inner{
+  /*
   width:min(var(--max), 100%);
+  */
+  width: 100%;
+  max-width:none;
   margin:0 auto;
   padding:0 16px;
   display:grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap:18px;
 }
 .card{
@@ -99,6 +103,7 @@
   .section__inner{ grid-template-columns: 1fr; }
   .partnerRow img{ width:46%; }
 }
+
 
 
 
