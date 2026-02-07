@@ -438,3 +438,70 @@
   fixExternalBlankRel();
 
 })();
+
+
+
+(() => {
+  const trigger = document.getElementById("vexxTrigger");
+  const follower = document.getElementById("cursorFollower");
+  if (!trigger || !follower) return;
+
+  const REQUIRED_CLICKS = 11;
+
+  let clicks = 0;
+  let active = false;
+
+  // 커서 위치 (부드럽게 따라오게)
+  let targetX = -9999, targetY = -9999;
+  let curX = -9999, curY = -9999;
+
+  // 커서에서 살짝 떨어진 위치 (이미지가 커서를 가리지 않게)
+  const offsetX = 10;
+  const offsetY = 14;
+
+  function activate(){
+    active = true;
+    follower.style.opacity = "1";
+    requestAnimationFrame(tick);
+  }
+
+  // 원하면 토글로 꺼지게도 가능 (11번 다시 누르면 끔)
+  function deactivate(){
+    active = false;
+    follower.style.opacity = "0";
+    follower.style.transform = "translate(-9999px, -9999px)";
+    clicks = 0;
+  }
+
+  trigger.style.cursor = "pointer";
+
+  trigger.addEventListener("click", () => {
+    if (active) return; // 켜진 뒤에는 클릭 카운트 멈춤 (원하면 토글로 변경 가능)
+    clicks += 1;
+    if (clicks >= REQUIRED_CLICKS) activate();
+  });
+
+  // 마우스/펜/터치까지 포괄 (desktop에서도 pointermove가 잘 먹음)
+  window.addEventListener("pointermove", (e) => {
+    if (!active) return;
+    targetX = e.clientX + offsetX;
+    targetY = e.clientY + offsetY;
+  }, { passive: true });
+
+  function tick(){
+    if (!active) return;
+
+    // 스무딩(추적을 살짝 늦춰서 자연스럽게)
+    curX += (targetX - curX) * 0.22;
+    curY += (targetY - curY) * 0.22;
+
+    follower.style.transform = `translate(${curX}px, ${curY}px)`;
+    requestAnimationFrame(tick);
+  }
+
+  // ESC로 끄고 싶으면 이거 켜
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && active) deactivate();
+  });
+})();
+
