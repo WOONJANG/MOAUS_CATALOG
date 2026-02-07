@@ -1,69 +1,6 @@
 (async () => {
 
   /* =========================================================
-     THEME (dark/light)
-     - html[data-theme]="dark|light" 로 CSS 토큰 스위칭
-     - localStorage("theme") 저장
-     ========================================================= */
-  const THEME_KEY = "theme";
-
-  function getSystemTheme(){
-    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ? "dark"
-      : "light";
-  }
-
-  function normalizeTheme(t){
-    return (t === "dark" || t === "light") ? t : null;
-  }
-
-  function readStoredTheme(){
-    try{
-      return normalizeTheme(localStorage.getItem(THEME_KEY));
-    }catch(e){
-      return null;
-    }
-  }
-
-  function writeStoredTheme(t){
-    try{
-      localStorage.setItem(THEME_KEY, t);
-    }catch(e){}
-  }
-
-  function applyTheme(t){
-    const theme = normalizeTheme(t) || getSystemTheme();
-    const root = document.documentElement;
-
-    root.dataset.theme = theme;
-    root.style.colorScheme = theme;
-
-    // 버튼 상태 동기화 (header partial이 들어온 뒤에도 호출될 수 있음)
-    const btn = document.getElementById("themeToggle");
-    if(btn){
-      btn.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
-      btn.title = theme === "dark" ? "라이트 모드" : "다크 모드";
-    }
-  }
-
-  function initThemeEarly(){
-    const stored = readStoredTheme();
-    applyTheme(stored || getSystemTheme());
-  }
-
-  function initThemeToggle(){
-    const btn = document.getElementById("themeToggle");
-    if(!btn) return;
-
-    btn.addEventListener("click", () => {
-      const cur = document.documentElement.dataset.theme || getSystemTheme();
-      const next = (cur === "light") ? "dark" : "light";
-      writeStoredTheme(next);
-      applyTheme(next);
-    });
-  }
-
-  /* =========================================================
      PARTIALS
      ========================================================= */
   async function includePartials(){
@@ -97,17 +34,6 @@
     }catch(_){
       return null;
     }
-  }
-
-  function isExternalHref(href){
-    if(!href) return true;
-    const h = href.trim();
-    if(!h) return true;
-    if(h.startsWith("#")) return false;
-    if(/^https?:\/\//i.test(h)) return true;
-    if(/^mailto:/i.test(h)) return true;
-    if(/^tel:/i.test(h)) return true;
-    return false;
   }
 
   function getHeaderHeight(){
@@ -269,59 +195,9 @@
   }
 
   /* =========================================================
-     HEADER PROGRESS BAR (자동 생성 + CSS 주입)
+     HEADER PROGRESS BAR (스크롤 진행률)
+     - .headerProgress는 header.html/layout.css에 이미 있으니 JS는 값만 갱신
      ========================================================= */
-  function ensureHeaderProgress(){
-    const header = document.getElementById("siteHeader");
-    if(!header) return;
-
-    // position이 없으면 absolute 배치가 깨지니 보정 (이미 fixed면 괜찮음)
-    const cs = getComputedStyle(header);
-    if(cs.position === "static"){
-      header.style.position = "relative";
-    }
-
-    // progress element 없으면 생성
-    if(!header.querySelector(".headerProgress")){
-      const bar = document.createElement("div");
-      bar.className = "headerProgress";
-      bar.setAttribute("aria-hidden", "true");
-      header.appendChild(bar);
-    }
-
-    // CSS 없으면 주입
-    const styleId = "header-progress-style";
-    if(!document.getElementById(styleId)){
-      const st = document.createElement("style");
-      st.id = styleId;
-      st.textContent = `
-        .headerProgress{
-          position:absolute;
-          left:0; right:0; bottom:0;
-          height:2px;
-          background: rgba(255,255,255,.08);
-          overflow:hidden;
-          pointer-events:none;
-        }
-        .headerProgress::before{
-          content:"";
-          display:block;
-          height:100%;
-          width: var(--scrollP, 0%);
-          background: rgba(255,255,255,.75);
-          transform: translateZ(0);
-        }
-        html[data-theme="light"] .headerProgress{
-          background: rgba(0,0,0,.08);
-        }
-        html[data-theme="light"] .headerProgress::before{
-          background: rgba(0,0,0,.65);
-        }
-      `;
-      document.head.appendChild(st);
-    }
-  }
-
   function initScrollProgress(){
     const doc = document.documentElement;
 
@@ -355,7 +231,6 @@
     // 로드 시 hash 있으면 보정
     window.addEventListener("load", () => {
       if(location.hash){
-        // 첫 렌더 후 보정이 안정적
         setTimeout(() => scrollToHash(location.hash, "auto"), 0);
       }
     });
@@ -496,50 +371,6 @@
   }
 
   /* =========================================================
-     PREFETCH (hover 시 다음 문서 미리 받기)
-     - 과하면 트래픽 늘어남. 메뉴에만 자연스럽게 적용됨.
-     ========================================================= */
-  function initPrefetchOnHover(){
-    const seen = new Set();
-
-    function shouldPrefetch(href){
-      if(!href) return false;
-      if(href.startsWith("#")) return false;
-      if(/^https?:\/\//i.test(href)) return false;
-      if(/^mailto:/i.test(href) || /^tel:/i.test(href)) return false;
-      return true;
-    }
-
-    function prefetch(href){
-      const u = safeURL(href);
-      if(!u) return;
-
-      // 같은 문서만 대상으로(쿼리/해시 제거)
-      const key = u.pathname + u.search;
-      if(seen.has(key)) return;
-      seen.add(key);
-
-      const link = document.createElement("link");
-      link.rel = "prefetch";
-      link.href = u.href;
-      link.as = "document";
-      document.head.appendChild(link);
-    }
-
-    document.addEventListener("mouseover", (e) => {
-      const a = e.target.closest?.("a[href]");
-      if(!a) return;
-
-      // nav/drawer 위주로만
-      if(!a.closest(".nav") && !a.closest(".drawer")) return;
-
-      const href = (a.getAttribute("href") || "").trim();
-      if(!shouldPrefetch(href)) return;
-      prefetch(href);
-    });
-  }
-
-  /* =========================================================
      DEV CREDIT TOGGLE (WOONIVERSE → build badge)
      ========================================================= */
   function initDevCredit(){
@@ -587,20 +418,13 @@
   }
 
   /* =========================================================
-     ✅ 실행 순서
+     실행 순서
      ========================================================= */
-  initThemeEarly();
-
   await includePartials();
-
-  // partial 들어온 뒤
-  initThemeToggle();
-  applyTheme(document.documentElement.dataset.theme); // 버튼 aria/title 동기화
 
   ensureMainAndSkipLink();
 
   initHeaderScroll();
-  ensureHeaderProgress();
   initScrollProgress();
 
   initAnchorOffset();
@@ -612,6 +436,5 @@
   initDevCredit();
 
   fixExternalBlankRel();
-  initPrefetchOnHover();
 
 })();
