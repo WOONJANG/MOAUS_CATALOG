@@ -79,11 +79,6 @@
   font-size:13px;
   line-height:1.7;
 }
-/* SHOWCASE 배너 슬라이더: 네비/페이지네이션 색상 */
-#showcase .swiper{
-  --swiper-navigation-color: #a0a0a0; /* 좌/우 화살표 */
-  --swiper-pagination-color: #a0a0a0;  /* 아래 점(있다면) */
-}
 
 /* partners 이미지 정리 */
 .partnerRow{
@@ -106,11 +101,11 @@
   .partnerRow img{ width:46%; }
 }
 
+/* SHOWCASE 배너 Swiper만 타겟 */
+#showcase .swiper{
+  --swiper-navigation-color: #C8A24A; /* 좌/우 화살표 색 */
+}
 
-
-
-
-
-
-
-
+/* (옵션) 화살표 크기 */
+#showcase .swiper{
+  --swiper-navigation-size: 28px;
