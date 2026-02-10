@@ -5,7 +5,7 @@
     const fullPath = (location.pathname || "/") + (location.search || "") + (location.hash || "");
     document.getElementById("reqPath").textContent = fullPath;
 
-    const target = new URL(BASE_PATH.replace(/\/?$/, "/") + "index.html", location.origin).toString();
+    const target = new URL(BASE_PATH.replace(/\/?$/, "/") + "./index.html", location.origin).toString();
 
     // 링크들도 안전하게 보정
     document.getElementById("homeLink").href = target;
