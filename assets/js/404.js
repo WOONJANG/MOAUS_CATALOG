@@ -9,7 +9,7 @@
 
     // 링크들도 안전하게 보정
     document.getElementById("homeLink").href = target;
-    document.getElementById("contactLink").href = new URL(BASE_PATH.replace(/\/?$/, "/") + "contact.html", location.origin).toString();
+    document.getElementById("contactLink").href = new URL(BASE_PATH.replace(/\/?$/, "/") + "./contact.html", location.origin).toString();
 
     // 카운트다운 + 리다이렉트
     let sec = 3;
